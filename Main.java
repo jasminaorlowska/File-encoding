@@ -1,24 +1,15 @@
-import java.util.HashMap;
-import java.util.Set;
 
 public class Main {
-    public static void main(String[] args) {
-        int n = 10;
-        CipherCaesar caesar = new CipherCaesar();
-        CipherMorse morse = new CipherMorse();
 
-        MyText textRead = new MyText();
-        textRead.readMyFile("");
-        Set<String> s = textRead.getWords(n);
+	public static void main(String[] args){
 
-        for (String word : s) {
-            System.out.println(word);
-        }
-        HashMap<String, String> encoded = textRead.getEncodedWords(caesar);
+Cipher morse=new CipherMorse();
+Cipher cezar=new CipherCaesar();
+String s1="aA sS dddd ,.903 xyz";
+String s2="aA+dfghjkl 90 xyz";
+String s3=morse.encode(s1);
+String s4=cezar.encode(s2);
+System.out.println(s1+s3+s2+s4);
 
-        String[] array = {"jeden", "dwa", "trzy"};
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i] + "=" + textRead.getEncoding(array[i]));
-        }
-    }
+	}
 }
