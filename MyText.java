@@ -1,24 +1,36 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
 /*Przechowuje tekst wczytany z pliku na odpowiednich zmiennych lokalnych*/
 
 public class MyText {
     private Map<String, Integer> wordCountMap;
 
-    public void readMyFile(String path) {
+    public void readMyFile(String fileName) {
         wordCountMap = new HashMap<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] words = line.split(" ");
-                for (String word : words) {
-                    wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
+        try {
+            URL resourceUrl = MyText.class.getResource(fileName);
+            if (resourceUrl != null) {
+                File file = Paths.get(resourceUrl.toURI()).toFile();
+                String filePath = file.getAbsolutePath();
+
+                try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        String[] words = line.split(" ");
+                        for (String word : words) {
+                            wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
+                        }
+                    }
                 }
+            } else {
+                System.out.println("Nie znaleziono pliku: " + fileName);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
